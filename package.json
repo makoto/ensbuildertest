@@ -11,5 +11,11 @@
   },
   "keywords": [],
   "author": "Makoto Inoue <inouemak@googlemail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "ens-builder": "^1.1.0",
+    "ethers": "^4.0.1",
+    "ganache-cli": "^6.1.8",
+    "ganache-core": "^2.2.1"
+  }
 }

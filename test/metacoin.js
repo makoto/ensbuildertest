@@ -1,6 +1,29 @@
-var MetaCoin = artifacts.require("./MetaCoin.sol");
+const MetaCoin = artifacts.require("./MetaCoin.sol");
+const ENSBuilder = require('ens-builder');
+const ethers = require('ethers');
+const Ganache = require('ganache-core');
+const {providers} = ethers;
+const {withENS, defaultGanacheOptions} = require('./utils');
 
 contract('MetaCoin', function(accounts) {
+  before(async () => {
+    const web3Provider = Ganache.provider(defaultGanacheOptions);
+    let provider = new providers.Web3Provider(web3Provider);
+    userWallet = new ethers.Wallet('0x29f3edee0ad3abf8e2699402e0e28cd6492c9be7eaab00d732a791c33552f797', provider);
+    deployWallet = new ethers.Wallet('0x5c8b9227cd5065c7e3f6b73826b8b42e198c4497f6688e3085d5ab3a6d520e74', provider);
+    builder = new ENSBuilder(deployWallet);
+  });
+
+  it.only("should put 10000 MetaCoin in the first account", async function() 
+  {
+    // Fails here.
+    let ensAddress = await builder.bootstrapWith('example', 'eth');
+    assert.notEqual(ensAddress,0);
+    // let providerWithEns = withENS(provider, ensAddress);
+    // const address = providerWithEns.resolveName('example.eth');
+    // const name = providerWithEns.lookupAddress('example.eth');
+  });
+
   it("should put 10000 MetaCoin in the first account", function() {
     return MetaCoin.deployed().then(function(instance) {
       return instance.getBalance.call(accounts[0]);
